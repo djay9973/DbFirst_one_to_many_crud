@@ -1,0 +1,79 @@
+﻿@model IEnumerable<DbFirst_one_to_many_crud.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container invisible" style="top:10%; height:80%; position:absolute;" id="DivDetailView">
+
+</div>
+
+<div id="DivListView" class="container visible">
+    <p class="float-right">
+        <a asp-action="Create" class="btn btn-outline-primary">Add New</a>
+    </p>
+
+    <table>
+        <thead class="" id="employeeTable">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DepID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "Employees", null, Context.Request.Scheme)','New Employee')" class="btn btn-success text-white"><i class="fas fa-random"></i> New Employee</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="tr_@item.Id">
+                    <partial name="_EmployeeList" model="@item" />
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function deleteEmployee(form) {
+            var removeItemE1 = $(form);
+            removeItemE1.closest("tr").remove();
+        }
+        function ShowDetailForm() {
+            $("#DivDetailView").addClass("visible");
+            $("#DivDetailView").removeClass("invisible");
+
+            $("#DivListView").addClass("invisible");
+            $("#DivListView").removeClass("visible");
+            return;
+        }
+
+        function CloseDetailForm() {
+            $("#DivDetailView").addClass("invisible");
+            $("#DivDetailView").removeClass("visible");
+
+            $("#DivListView").addClass("visible");
+            $("#DivListView").removeClass("invisible");
+            return;
+        }
+    </script>
+}

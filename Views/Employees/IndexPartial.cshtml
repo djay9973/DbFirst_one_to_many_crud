@@ -1,0 +1,31 @@
+﻿@model IEnumerable<DbFirst_one_to_many_crud.Models.Employee>
+<div id="view-all">
+    @await Html.PartialAsync("_EmployeeList", Model)
+</div>
+<div class="card">
+    <div class="col-sm-12" style="padding:20px">
+        <a onclick="jQueryModalGet('?handler=CreateOrEdit','Create Customer')" class="btn bg-success">
+            Create
+        </a>
+        <a id="reload" class="btn bg-warning">
+            Reload
+        </a>
+    </div>
+    <div id="viewAll" class="card-body table-responsive"></div>
+</div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#viewAll').load('?handler=ViewAllPartial');
+        });
+        $(function () {
+            $('#reload').on('click', function () {
+                $('#viewAll').load('?handler=ViewAllPartial');
+            });
+        });
+    </script>
+}
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
